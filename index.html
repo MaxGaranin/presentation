@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					### About
+					
+					TypeScript is a open source langauge by Microsoft that compiles into JavaScript. 
+					The goal of TypeScript is to bring a sense of type safety into JavaScript. 
+					This intro to TypeScript is best suited for those who have familiarity of JavaScript. 
+					The goal of this intro is not to teach you how write TypeScript but the advantages 
+					it offers over plain JavaScript.					
+				</section>
+				<section>
+					<section data-markdown>
+						### Basic Types  
+					</section>
+					<section data-markdown>
+						```    
+						// Boolean
+						let isDone: boolean = false;
+						
+						// Number
+						let decimal: number = 6;
+						let hex: number = 0xf00d;
+						let binary: number = 0b1010;
+						let octal: number = 0o744;
+						
+						// Strings
+						let color: string = "blue";
+						color = 'red'; // Both single and double quotes work
+						color = `red ${decimal}`; // As well as template strings
+						
+						// Array
+						let fib: number[] = [1, 1, 2, 3, 5, 8, 13]; // You can use brackets after the type
+						let primes: Array<number> = [2, 3, 5, 7, 11, 13]; // Or you can use the Array with the type as a generic
+						```    
+					</section>
+					<section data-markdown>
+						##### ReadOnly array
+						```
+						let natural: ReadonlyArray<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+						naturl.length = 20; // Error: modifing the length
+						natural.push(10); // Error: adding an item
+						natural[0] = 0; // Error: changing a value at a position
+						```
+					</section>
+					<section data-markdown>
+						##### Tuple
+						```
+						// Declare a tuple type
+						let x: [string, number];
+						// Initialize it
+						x = ["hello", 10]; // OK
+						// Initialize it incorrectly
+						x = [10, "hello"]; // Error
+						```
+					</section>		
+					<section data-markdown>
+						##### Enum
+						```
+						enum Color {Red, Green, Blue}
+						let paintColor: Color = Color.Green
+
+						// They can also be accessed by their index
+						paintColor = Color[0] // Will be set to Red
+						```
+					</section>	
+				</section>
+				<section>
+					<section data-markdown>
+						### Interfaces
+					</section>
+				</section>	
+				<section>
+					<section data-markdown>
+						### Classes
+					</section>
+				</section>
+				<section>
+					<section data-markdown>
+						### Generics
+					</section>
+				</section>				
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
