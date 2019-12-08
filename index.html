@@ -26,14 +26,28 @@
 		<div class="reveal">
 			<div class="slides">
 				<section data-markdown>
-					### About
-					
-					TypeScript is a open source langauge by Microsoft that compiles into JavaScript. 
-					The goal of TypeScript is to bring a sense of type safety into JavaScript. 
-					This intro to TypeScript is best suited for those who have familiarity of JavaScript. 
-					The goal of this intro is not to teach you how write TypeScript but the advantages 
-					it offers over plain JavaScript.					
+					### TypeScript
 				</section>
+				<section>
+					<section data-markdown>
+						### Intro
+					</section>				
+					<section data-markdown>
+						###### Why use types?
+						* Self-documenting
+						* Let computer keep track of context
+						* Avoid common pitfalls
+						* Encourage API-driven development
+					</section>				
+					<section data-markdown>
+						###### To Get Started
+						```
+						npm install -g typescript
+
+						tsc helloworld.ts
+						```
+					</section>							
+				</section>				
 				<section>
 					<section data-markdown>
 						### Basic Types  
@@ -53,21 +67,29 @@
 						let color: string = "blue";
 						color = 'red'; // Both single and double quotes work
 						color = `red ${decimal}`; // As well as template strings
-						
-						// Array
-						let fib: number[] = [1, 1, 2, 3, 5, 8, 13]; // You can use brackets after the type
-						let primes: Array<number> = [2, 3, 5, 7, 11, 13]; // Or you can use the Array with the type as a generic
-						```    
+						```    					
 					</section>
 					<section data-markdown>
-						##### ReadOnly array
+						### Type proofing
 						```
-						let natural: ReadonlyArray<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-						naturl.length = 20; // Error: modifing the length
-						natural.push(10); // Error: adding an item
-						natural[0] = 0; // Error: changing a value at a position
-						```
-					</section>
+						// This is TYPESCRIPT
+						let number = 20;
+						number = '20'; // ERROR
+
+						let typedNumber: number = 20;
+						typedNumber = '20';
+						````
+					</section>					
+					<section data-markdown>
+						### Array
+						```    
+						// You can use brackets after the type
+						let fib: number[] = [1, 1, 2, 3, 5, 8, 13]; 
+												
+						// Or you can use the Array with the type as a generic
+						let primes: Array<number> = [2, 3, 5, 7, 11, 13];
+						```    
+					</section>				
 					<section data-markdown>
 						##### Tuple
 						```
@@ -77,6 +99,14 @@
 						x = ["hello", 10]; // OK
 						// Initialize it incorrectly
 						x = [10, "hello"]; // Error
+
+						console.log(x[0].substring(1)); // OK
+						console.log(x[1].substring(1)); // Error, 'number' does not have 'substring'
+						
+						// Error, Property '3' does not exist on type '[string, number]'.
+						x[3] = "world"; 
+						// Error, Property '5' does not exist on type '[string, number]'
+						console.log(x[5].toString()); 
 						```
 					</section>		
 					<section data-markdown>
@@ -92,19 +122,234 @@
 				</section>
 				<section>
 					<section data-markdown>
-						### Interfaces
-					</section>
-				</section>	
-				<section>
-					<section data-markdown>
 						### Classes
+					</section>
+					<section data-markdown>
+						###### Classes
+						```
+						class Greeter {
+							greeting: string;
+							constructor(message: string) {
+								this.greeting = message;
+							}
+							greet() {
+								return "Hello, " + this.greeting;
+							}
+						}
+						
+						let greeter = new Greeter("world");
+						```						
+					</section>
+					<section data-markdown>
+						###### Inheritance
+						```
+						class Animal {
+							move(distanceInMeters: number = 0) {
+								console.log(`Animal moved ${distanceInMeters}m.`);
+							}
+						}
+						
+						class Dog extends Animal {
+							bark() {
+								console.log('Woof! Woof!');
+							}
+						}
+						
+						const dog = new Dog();
+						dog.bark();
+						dog.move(10);
+						dog.bark();				
+												
+						let greeter = new Greeter("world");
+						```						
+					</section>	
+					<section data-markdown>
+						###### Statics
+						```
+						class Something {
+							static instances = 0;
+							constructor() {
+								Something.instances++;
+							}
+						}
+						
+						var s1 = new Something();
+						var s2 = new Something();
+						console.log(Something.instances); // 2
+						```
+					</section>
+					<section data-markdown>
+						###### Access modifiers
+						| accessible on	  | public | protected | private |
+						| --------------- | ------ | --------- | ------- |
+						| class	          |  yes   |     yes   |  yes    |
+						| class children  |  yes   |     yes   |   no    |
+						| class instances |  yes   |     no	   |   no    |
+					</section>		
+					<section data-markdown>
+						###### Access modifiers 2
+						```
+						class FooBase {
+							public x: number;
+							private y: number;
+							protected z: number;
+						}
+						
+						// EFFECT ON INSTANCES
+						var foo = new FooBase();
+						foo.x; // okay
+						foo.y; // ERROR : private
+						foo.z; // ERROR : protected
+						
+						// EFFECT ON CHILD CLASSES
+						class FooChild extends FooBase {
+							constructor() {
+								super();
+								this.x; // okay
+								this.y; // ERROR: private
+								this.z; // okay
+							}
+						}
+						```
+					</section>
+					<section data-markdown>
+						###### Abstract classes
+						```
+						abstract class Department {
+							abstract printMeeting(): void; // must be implemented in derived classes
+						}
+						
+						class AccountingDepartment extends Department {
+							generateReports(): void {
+								console.log("Generating accounting reports...");
+							}
+						}
+						```
+					</section>
+					<section data-markdown>
+						###### Getters and Setters
+						```
+						const fullNameMaxLength = 10;
+
+						class Employee {
+							private _fullName: string;
+						
+							get fullName(): string {
+								return this._fullName;
+							}
+						
+							set fullName(newName: string) {
+								if (newName && newName.length > fullNameMaxLength) {
+									throw new Error("fullName has a max length of " + fullNameMaxLength);
+								}
+								
+								this._fullName = newName;
+							}
+						}
+						
+						let employee = new Employee();
+						employee.fullName = "Bob Smith";
+						if (employee.fullName) {
+							console.log(employee.fullName);
+						}						
+						```
 					</section>
 				</section>
 				<section>
 					<section data-markdown>
-						### Generics
+						### Interfaces
 					</section>
-				</section>				
+					<section data-markdown>
+						###### First example
+						```
+						function printLabel(labeledObj: { label: string }) {
+							console.log(labeledObj.label);
+						}
+						
+						let myObj = {size: 10, label: "Size 10 Object"};
+						printLabel(myObj);
+						```
+					</section>
+					<section data-markdown>
+						###### Second example
+						```
+						interface LabeledValue {
+							label: string;
+						}
+						
+						function printLabel(labeledObj: LabeledValue) {
+							console.log(labeledObj.label);
+						}
+						
+						let myObj = {size: 10, label: "Size 10 Object"};
+						printLabel(myObj);
+						```
+					</section>
+   					<section data-markdown>
+						###### Optional properties
+						```
+						interface SquareConfig {
+							color?: string;
+							width?: number;
+						}
+						
+						function createSquare(config: SquareConfig): {color: string; area: number} {
+							let newSquare = {color: "white", area: 100};
+							if (config.color) {
+								newSquare.color = config.color;
+							}
+							if (config.width) {
+								newSquare.area = config.width * config.width;
+							}
+							return newSquare;
+						}
+						
+						let mySquare = createSquare({color: "black"});						
+						```
+					</section>		
+					<section data-markdown>
+						###### Readonly properties
+						```
+						interface Point {
+							readonly x: number;
+							readonly y: number;
+						}
+						You can construct a Point by assigning an object literal. After the assignment, x and y can’t be changed.
+						
+						let p1: Point = { x: 10, y: 20 };
+						p1.x = 5; // error!							
+						```
+					</section>
+					<section data-markdown>
+						###### Readonly arrays
+						```
+						let a: number[] = [1, 2, 3, 4];
+						let ro: ReadonlyArray<number> = a;
+						ro[0] = 12;      // error!
+						ro.push(5);      // error!
+						ro.length = 100; // error!
+						a = ro;          // error!
+						```
+					</section>					
+					<section data-markdown>
+						###### Classes can implement interfaces
+						```
+						interface Point {
+							x: number; y: number;
+						}
+						
+						class MyPoint implements Point {
+							x: number; y: number; // Same as Point
+						}
+						```
+					</section>					
+				</section>	
+				<section>
+				<section>
+					<section data-markdown>
+						### Conclusion
+					</section>
+				</section>	
 			</div>
 		</div>
 
