@@ -37,7 +37,6 @@
 						* Self-documenting
 						* Let computer keep track of context
 						* Avoid common pitfalls
-						* Encourage API-driven development
 					</section>				
 					<section data-markdown>
 						###### To Get Started
@@ -50,9 +49,15 @@
 				</section>				
 				<section>
 					<section data-markdown>
-						### Basic Types  
+						### Basics
+					</section>					
+					<section data-markdown>
+						```
+						const myStringVariable: string = "str";
+						```
 					</section>
 					<section data-markdown>
+						###### Primitive types
 						```    
 						// Boolean
 						let isDone: boolean = false;
@@ -70,55 +75,112 @@
 						```    					
 					</section>
 					<section data-markdown>
-						### Type proofing
+						### Object
 						```
-						// This is TYPESCRIPT
-						let number = 20;
-						number = '20'; // ERROR
-
-						let typedNumber: number = 20;
-						typedNumber = '20';
+						const myObjectVariable: object = "str"; // error
+						const myObjectVariable2: object = {};
 						````
-					</section>					
-					<section data-markdown>
-						### Array
-						```    
-						// You can use brackets after the type
-						let fib: number[] = [1, 1, 2, 3, 5, 8, 13]; 
-												
-						// Or you can use the Array with the type as a generic
-						let primes: Array<number> = [2, 3, 5, 7, 11, 13];
-						```    
-					</section>				
-					<section data-markdown>
-						##### Tuple
-						```
-						// Declare a tuple type
-						let x: [string, number];
-						// Initialize it
-						x = ["hello", 10]; // OK
-						// Initialize it incorrectly
-						x = [10, "hello"]; // Error
-
-						console.log(x[0].substring(1)); // OK
-						console.log(x[1].substring(1)); // Error, 'number' does not have 'substring'
-						
-						// Error, Property '3' does not exist on type '[string, number]'.
-						x[3] = "world"; 
-						// Error, Property '5' does not exist on type '[string, number]'
-						console.log(x[5].toString()); 
-						```
-					</section>		
-					<section data-markdown>
-						##### Enum
-						```
-						enum Color {Red, Green, Blue}
-						let paintColor: Color = Color.Green
-
-						// They can also be accessed by their index
-						paintColor = Color[0] // Will be set to Red
-						```
 					</section>	
+					<section data-markdown>
+						### Any
+						```
+						let myAnyVariable: any = "str";
+						myAnyVariable = 10;
+						myAnyVariable = true;
+						````
+					</section>
+					<section data-markdown>
+						### Void
+						```
+						let myVoidVariable: void = undefined;
+						myVoidVariable = null;
+						````
+					</section>																
+				</section>
+				<section>
+					<section data-markdown>
+						### Composition types
+					</section>
+					<section data-markdown>
+						###### Unions
+						```
+						let myUnionVariable: string | number = "str";
+						myUnionVariable = 10;
+						myUnionVariable = false; // error
+						```
+					</section>
+					<section data-markdown>
+						###### Intersection types
+						```
+						const myIntersectionVariable: {str: string} & {num: number} = {
+							str : "str",
+							num: 10
+						};
+						```
+					</section>
+					<section data-markdown>
+						###### Type aliases
+						```
+						type MyUnionType = string | number;
+
+						const myUnionVariable: MyUnionType = "str";
+						const myUnionVariable2: MyUnionType = 10;
+						```
+					</section>						
+					<section data-markdown>
+						###### Arrays
+						```
+						const myStringArrayVariable: string[] = ["str", "str"]; 
+						const myUnionArrayVariable: (string | number)[] = ["str", 10];
+						```
+					</section>						
+					<section data-markdown>
+						###### Tuples
+						```
+						const myTupleVariable: [number, string] = [10, "str"];
+						const myTupleVariable2: [string, number] = [10, "str"]; // error
+						```
+					</section>						
+					<section data-markdown>
+						###### Enums
+						```
+						enum Color {Red, Green, Blue};
+
+						let myColorEnumVariable: Color = Color.Red;
+						myColorEnumVariable = 2;
+						myColorEnumVariable = Color[1]; // error						
+						```
+					</section>						
+					<section data-markdown>
+						###### Functions
+						```
+						function myFunction(myStringArg: string, myNumberArg: number): void
+						{
+							// code
+						}						
+						```
+					</section>						
+					<section data-markdown>
+						###### Functions. Void
+						```
+						function myFunction(funcArg: () => void): void {
+							// code
+						}							
+						```
+					</section>						
+					<section data-markdown>
+						###### Functions. Optional parameters
+						```
+						function myFunction(myArg: number, myOptionalArg?: string): void {
+							// code
+						}	
+						
+						function myFunction(myArg: number, 
+							myOptionalArg: string | undefined): void {
+							// code
+						}						
+						```
+					</section>						
 				</section>
 				<section>
 					<section data-markdown>
@@ -141,44 +203,6 @@
 						```						
 					</section>
 					<section data-markdown>
-						###### Inheritance
-						```
-						class Animal {
-							move(distanceInMeters: number = 0) {
-								console.log(`Animal moved ${distanceInMeters}m.`);
-							}
-						}
-						
-						class Dog extends Animal {
-							bark() {
-								console.log('Woof! Woof!');
-							}
-						}
-						
-						const dog = new Dog();
-						dog.bark();
-						dog.move(10);
-						dog.bark();				
-												
-						let greeter = new Greeter("world");
-						```						
-					</section>	
-					<section data-markdown>
-						###### Statics
-						```
-						class Something {
-							static instances = 0;
-							constructor() {
-								Something.instances++;
-							}
-						}
-						
-						var s1 = new Something();
-						var s2 = new Something();
-						console.log(Something.instances); // 2
-						```
-					</section>
-					<section data-markdown>
 						###### Access modifiers
 						| accessible on	  | public | protected | private |
 						| --------------- | ------ | --------- | ------- |
@@ -187,164 +211,159 @@
 						| class instances |  yes   |     no	   |   no    |
 					</section>		
 					<section data-markdown>
-						###### Access modifiers 2
+						###### Access modifiers. Public
 						```
-						class FooBase {
-							public x: number;
-							private y: number;
-							protected z: number;
-						}
-						
-						// EFFECT ON INSTANCES
-						var foo = new FooBase();
-						foo.x; // okay
-						foo.y; // ERROR : private
-						foo.z; // ERROR : protected
-						
-						// EFFECT ON CHILD CLASSES
-						class FooChild extends FooBase {
-							constructor() {
-								super();
-								this.x; // okay
-								this.y; // ERROR: private
-								this.z; // okay
+						class MyClass {
+							public myStringMember: string = 'str';
+							
+							public constructor() {
+								this.myStringMember; // 'str'
 							}
 						}
+						
+						new MyClass().myStringMember; // 'str'
 						```
-					</section>
+					</section>					
+					<section data-markdown>
+						###### Access modifiers. Private
+						```
+						class MyClass {
+							private myStringMember: string = 'str';
+							
+							constructor() {
+								this.myStringMember; // 'str'
+							}
+						}
+						
+						new MyClass().myStringMember; // error
+						```
+					</section>					
+					<section data-markdown>
+						###### Access modifiers. Protected
+						```
+						class MyClass {
+							protected myStringMember: string = 'str';
+							
+							protected constructor() {
+								this.myStringMember; // 'str'
+							}
+						}
+						
+						class MyInheritedClass extends MyClass {
+							public constructor() {
+								super();
+								this.myStringMember; // 'str'
+							}
+						}
+						
+						new MyClass(); // error
+						
+						const instance = new MyInheritedClass();
+						instance.myStringMember; // error
+						```
+					</section>					
 					<section data-markdown>
 						###### Abstract classes
 						```
-						abstract class Department {
-							abstract printMeeting(): void; // must be implemented in derived classes
-						}
-						
-						class AccountingDepartment extends Department {
-							generateReports(): void {
-								console.log("Generating accounting reports...");
+						abstract class MyAbstractClass {
+							abstract myAbstractMethod(): void;
+							abstract myAbstractStringMember: string;
+							
+							constructor() {
+								this.myMethod();
+							}
+							
+							myMethod() {
+								this.myAbstractMethod();
 							}
 						}
+						```
+					</section>					
+				</section>				
+				<section>
+					<section data-markdown>
+						###### Interfaces
+					</section>
+					<section data-markdown>
+						```
+						interface MyInterface {
+							readonly myStringProperty: string;
+							myNumberProperty?: number;
+							
+							myMethodProperty(): void
+						}
+						```
+					</section>					
+					<section data-markdown>
+						###### Inheritance
+						```
+						interface MyCombinedInterface 
+							extends MyInterface, MyHybridInterface {
+							myBooleanProperty: boolean;
+						}
+
+						interface MyCombinedInterface extends MyClass {
+							myBooleanProperty: boolean;
+						}
+						```
+					</section>					
+					<section data-markdown>
+						###### Inheritance of interfaces
+						```
+						interface MyCombinedInterface 
+							extends MyInterface, MyHybridInterface {
+							myBooleanProperty: boolean;
+						}
+
+						interface MyCombinedInterface extends MyClass {
+							myBooleanProperty: boolean;
+						}
+						```
+					</section>	
+					<section data-markdown>
+						###### Inheritance of classes
+						```
+						class MyClass implements MyInterface {
+							myStringProperty: string = 'str';
+							myNumberProperty: number = 10;
+						}
+						```
+					</section>					
+				</section>
+				<section>
+					<section data-markdown>
+						### Generics
+					</section>
+					<section data-markdown>
+						###### Generics functions
+						```
+						function myFunction(arg: any): any {
+							return arg;
+						}
+							
+						function myGenericFunction<T>(arg: T): T {
+							return arg;
+						}						
 						```
 					</section>
 					<section data-markdown>
-						###### Getters and Setters
+						###### Generics classes and interfaces
 						```
-						const fullNameMaxLength = 10;
-
-						class Employee {
-							private _fullName: string;
-						
-							get fullName(): string {
-								return this._fullName;
+						class MyGenericClass<T, U> {
+							myProperty: T;
+							myProperty2: U;
+							constructor(arg: T) {
+								this.myProperty = arg;
 							}
+						}				
 						
-							set fullName(newName: string) {
-								if (newName && newName.length > fullNameMaxLength) {
-									throw new Error("fullName has a max length of " + fullNameMaxLength);
-								}
-								
-								this._fullName = newName;
-							}
-						}
-						
-						let employee = new Employee();
-						employee.fullName = "Bob Smith";
-						if (employee.fullName) {
-							console.log(employee.fullName);
+						interface MyGenericInterface<T> {
+							myProperty: T;
+							myProperty2: T[];
 						}						
 						```
 					</section>
 				</section>
-				<section>
-					<section data-markdown>
-						### Interfaces
-					</section>
-					<section data-markdown>
-						###### First example
-						```
-						function printLabel(labeledObj: { label: string }) {
-							console.log(labeledObj.label);
-						}
-						
-						let myObj = {size: 10, label: "Size 10 Object"};
-						printLabel(myObj);
-						```
-					</section>
-					<section data-markdown>
-						###### Second example
-						```
-						interface LabeledValue {
-							label: string;
-						}
-						
-						function printLabel(labeledObj: LabeledValue) {
-							console.log(labeledObj.label);
-						}
-						
-						let myObj = {size: 10, label: "Size 10 Object"};
-						printLabel(myObj);
-						```
-					</section>
-   					<section data-markdown>
-						###### Optional properties
-						```
-						interface SquareConfig {
-							color?: string;
-							width?: number;
-						}
-						
-						function createSquare(config: SquareConfig): {color: string; area: number} {
-							let newSquare = {color: "white", area: 100};
-							if (config.color) {
-								newSquare.color = config.color;
-							}
-							if (config.width) {
-								newSquare.area = config.width * config.width;
-							}
-							return newSquare;
-						}
-						
-						let mySquare = createSquare({color: "black"});						
-						```
-					</section>		
-					<section data-markdown>
-						###### Readonly properties
-						```
-						interface Point {
-							readonly x: number;
-							readonly y: number;
-						}
-						You can construct a Point by assigning an object literal. After the assignment, x and y can’t be changed.
-						
-						let p1: Point = { x: 10, y: 20 };
-						p1.x = 5; // error!							
-						```
-					</section>
-					<section data-markdown>
-						###### Readonly arrays
-						```
-						let a: number[] = [1, 2, 3, 4];
-						let ro: ReadonlyArray<number> = a;
-						ro[0] = 12;      // error!
-						ro.push(5);      // error!
-						ro.length = 100; // error!
-						a = ro;          // error!
-						```
-					</section>					
-					<section data-markdown>
-						###### Classes can implement interfaces
-						```
-						interface Point {
-							x: number; y: number;
-						}
-						
-						class MyPoint implements Point {
-							x: number; y: number; // Same as Point
-						}
-						```
-					</section>					
-				</section>	
-				<section>
 				<section>
 					<section data-markdown>
 						### Conclusion
