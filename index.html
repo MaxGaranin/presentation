@@ -35,17 +35,9 @@
 					<section data-markdown>
 						###### Why use types?
 						* Self-documenting
-						* Let computer keep track of context
 						* Avoid common pitfalls
+						* IDE support
 					</section>				
-					<section data-markdown>
-						###### To Get Started
-						```
-						npm install -g typescript
-
-						tsc helloworld.ts
-						```
-					</section>							
 				</section>				
 				<section>
 					<section data-markdown>
@@ -75,13 +67,6 @@
 						```    					
 					</section>
 					<section data-markdown>
-						### Object
-						```
-						const myObjectVariable: object = "str"; // error
-						const myObjectVariable2: object = {};
-						````
-					</section>	
-					<section data-markdown>
 						### Any
 						```
 						let myAnyVariable: any = "str";
@@ -89,13 +74,6 @@
 						myAnyVariable = true;
 						````
 					</section>
-					<section data-markdown>
-						### Void
-						```
-						let myVoidVariable: void = undefined;
-						myVoidVariable = null;
-						````
-					</section>																
 				</section>
 				<section>
 					<section data-markdown>
@@ -118,15 +96,6 @@
 						};
 						```
 					</section>
-					<section data-markdown>
-						###### Type aliases
-						```
-						type MyUnionType = string | number;
-
-						const myUnionVariable: MyUnionType = "str";
-						const myUnionVariable2: MyUnionType = 10;
-						```
-					</section>						
 					<section data-markdown>
 						###### Arrays
 						```
