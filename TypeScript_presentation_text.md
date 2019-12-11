@@ -246,36 +246,5 @@ By using the implements keyword, you indicate that given class must have all pro
 
 ---------------------------------------------------------
 
-## Generics
-Generics are really important in TypeScript and some other statically-typed languages that include them.
-
-It can be safely assumed that the word generics has been created from the word general, which in this context means something same. Take a look at the function below.
-```
-function myFunction(arg: any): any {
-    return arg;
-}
-```
-Our function takes an argument of any type and simply returns it. As we already know, any type isn't very type-safe. It also doesn't indicate, that the return type is the same as argument type (although that can be read from the code, but not to the compiler). We would like to indicate that these types are exactly the same. No unions, aliases and other stuff - strictly the same! That's where the generics come into play.
-```
-function myGenericFunction<T>(arg: T): T {
-    return arg;
-}
-```
-Well, here's our generic function... and a bit of new syntax too. With the use of angle brackets (<>), just before type arguments declaration section, we declare a T type (T is the most commonly used name for generic types, generally single letters are preferred over long names). Then we indicate that the argument and return type are the same, but using this T type. And that's really generic 😁 because the same variable type is used in multiple places.
-
-But what's the T type? Is it string, number, etc.? Well, it can be any of those.
-
-### Generic world
-So, yeah, there are generic functions, but did you know that generics are spread all over TS type system? You can use them pretty much everywhere they fit. Most importantly classes and interfaces.
-```
-class MyGenericClass<T, U> {
-    myProperty: T;
-    myProperty2: U;
-    constructor(arg: T) {
-        this.myProperty = arg;
-    }
-}
-```
-
 ## Conclusion
 TypeScript is a language that helps us write better, safer, and more concise code, improving our experience and removing some dumb errors that we can make along the way. 

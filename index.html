@@ -88,15 +88,6 @@
 						```
 					</section>
 					<section data-markdown>
-						###### Intersection types
-						```
-						const myIntersectionVariable: {str: string} & {num: number} = {
-							str : "str",
-							num: 10
-						};
-						```
-					</section>
-					<section data-markdown>
 						###### Arrays
 						```
 						const myStringArrayVariable: string[] = ["str", "str"]; 
@@ -127,14 +118,6 @@
 						{
 							// code
 						}						
-						```
-					</section>						
-					<section data-markdown>
-						###### Functions. Void
-						```
-						function myFunction(funcArg: () => void): void {
-							// code
-						}							
 						```
 					</section>						
 					<section data-markdown>
@@ -232,6 +215,22 @@
 						```
 					</section>					
 					<section data-markdown>
+						###### Read-only
+						```
+						class MyClass {
+							readonly myStringMember: string = 'str';
+							
+							constructor() {
+								this.myStringMember = 'string'
+							}
+							
+							myMethod(): void {
+								this.myStringMember = 'str'; // error
+							}
+						}
+						```
+					</section>					
+					<section data-markdown>
 						###### Abstract classes
 						```
 						abstract class MyAbstractClass {
@@ -298,40 +297,6 @@
 						}
 						```
 					</section>					
-				</section>
-				<section>
-					<section data-markdown>
-						### Generics
-					</section>
-					<section data-markdown>
-						###### Generics functions
-						```
-						function myFunction(arg: any): any {
-							return arg;
-						}
-							
-						function myGenericFunction<T>(arg: T): T {
-							return arg;
-						}						
-						```
-					</section>
-					<section data-markdown>
-						###### Generics classes and interfaces
-						```
-						class MyGenericClass<T, U> {
-							myProperty: T;
-							myProperty2: U;
-							constructor(arg: T) {
-								this.myProperty = arg;
-							}
-						}				
-						
-						interface MyGenericInterface<T> {
-							myProperty: T;
-							myProperty2: T[];
-						}						
-						```
-					</section>
 				</section>
 				<section>
 					<section data-markdown>
